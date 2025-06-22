@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -31,7 +31,7 @@ import { Label } from "@/components/ui/label";
 import { Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { movies } from "@/data/movieData";
+import { requestDailyData } from "@/chainlink-getters/request-script";
 
 export default function MoviesPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,11 +40,21 @@ export default function MoviesPage() {
   const [selectedMovie, setSelectedMovie] = useState<(typeof movies)[0] | null>(
     null
   );
+  const [movies, setMovies] = useState<any>([]);
   const [betType, setBetType] = useState("");
   const [betAmount, setBetAmount] = useState("");
   const [prediction, setPrediction] = useState("");
 
-  const filteredMovies = movies.filter((movie) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const dailyData = await requestDailyData();
+      console.log(dailyData);
+      setMovies(dailyData);
+    };
+    fetchData();
+  }, []);
+
+  const filteredMovies = movies.filter((movie: any) => {
     const matchesSearch =
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       movie.director.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -58,10 +68,10 @@ export default function MoviesPage() {
   });
 
   const upcomingMovies = filteredMovies.filter(
-    (movie) => movie.status === "upcoming"
+    (movie: any) => movie.status === "upcoming"
   );
   const releasedMovies = filteredMovies.filter(
-    (movie) => movie.status === "released"
+    (movie: any) => movie.status === "released"
   );
 
   const handlePlaceBet = () => {
@@ -181,7 +191,7 @@ export default function MoviesPage() {
 
           <TabsContent value="upcoming">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {upcomingMovies.map((movie) => (
+              {upcomingMovies.map((movie: any) => (
                 <Card
                   key={movie.id}
                   className="bg-card border-border/50 overflow-hidden hover:border-border transition-all duration-300 group"
@@ -329,7 +339,7 @@ export default function MoviesPage() {
 
           <TabsContent value="released">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {releasedMovies.map((movie) => (
+              {releasedMovies.map((movie: any) => (
                 <Card
                   key={movie.id}
                   className="bg-card border-border/50 overflow-hidden"

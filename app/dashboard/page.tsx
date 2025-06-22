@@ -37,42 +37,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/50">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-primary-foreground rounded-sm" />
-              </div>
-              <h1 className="text-2xl font-medium text-foreground">
-                BoxOfficeBets
-              </h1>
-            </Link>
-            <nav className="hidden md:flex items-center space-x-12">
-              <Link
-                href="/movies"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Movies
-              </Link>
-              <Link
-                href="/leaderboard"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Leaderboard
-              </Link>
-              <Link href="/dashboard" className="text-foreground font-medium">
-                Dashboard
-              </Link>
-            </nav>
-            <Button variant="outline" className="border-border hover:bg-muted">
-              Profile
-            </Button>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-6 py-12">
         {/* Welcome Section */}
         <div className="mb-16">
